@@ -154,7 +154,7 @@ fn lobby_system(
 
     // create a GGRS P2P session
     let mut sess_build = SessionBuilder::<BoxConfig>::new()
-        .with_num_players(args.players)
+        .with_num_players(args.players).unwrap()
         .with_max_prediction_window(max_prediction)
         .with_input_delay(2);
 
