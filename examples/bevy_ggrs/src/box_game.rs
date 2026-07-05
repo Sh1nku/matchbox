@@ -32,6 +32,7 @@ pub struct BoxInput {
 }
 
 #[derive(Default, Component)]
+#[require(Rollback)]
 pub struct Player {
     pub handle: usize,
 }
@@ -130,10 +131,7 @@ pub fn setup_scene(
                 Player { handle },
                 // ...and components which will be rolled-back...
                 Velocity::default(),
-            ))
-            // ...just ensure you call `add_rollback()`
-            // This ensures a stable ID is available for the rollback system to refer to
-            .add_rollback();
+            ));
     }
 
     // light

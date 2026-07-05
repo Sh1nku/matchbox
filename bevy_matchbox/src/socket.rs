@@ -65,7 +65,7 @@ use std::{
 ///     commands.remove_resource::<MatchboxSocket>();
 /// }
 /// ```
-#[derive(Resource, Component, Debug)]
+#[derive(Resource, Debug)]
 #[allow(dead_code)] // keep the task alive so it doesn't drop before the socket
 pub struct MatchboxSocket(WebRtcSocket, Box<dyn Debug + Send + Sync>);
 
@@ -101,6 +101,8 @@ impl From<(WebRtcSocket, MessageLoopFuture)> for MatchboxSocket {
 struct OpenSocket(WebRtcSocketBuilder);
 
 impl Command for OpenSocket {
+    type Out = ();
+
     fn apply(self, world: &mut World) {
         world.insert_resource(MatchboxSocket::from(self.0));
     }
@@ -122,6 +124,8 @@ impl OpenSocketExt for Commands<'_, '_> {
 struct CloseSocket;
 
 impl Command for CloseSocket {
+    type Out = ();
+
     fn apply(self, world: &mut World) {
         world.remove_resource::<MatchboxSocket>();
     }

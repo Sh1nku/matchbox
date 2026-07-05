@@ -100,8 +100,8 @@ fn lobby_startup(mut commands: Commands, asset_server: Res<AssetServer>) {
                     },
                     Text("Entering lobby...".to_string()),
                     TextFont {
-                        font: asset_server.load("fonts/quicksand-light.ttf"),
-                        font_size: 96.,
+                        font: FontSource::Handle(asset_server.load("fonts/quicksand-light.ttf")),
+                        font_size: FontSize::Px(96.),
                         ..default()
                     },
                     TextColor(Color::BLACK),
@@ -155,6 +155,7 @@ fn lobby_system(
     // create a GGRS P2P session
     let mut sess_build = SessionBuilder::<BoxConfig>::new()
         .with_num_players(args.players)
+        .unwrap()
         .with_max_prediction_window(max_prediction)
         .with_input_delay(2);
 
